@@ -2,13 +2,13 @@ package de.juliseken.scytale.rsa.impl;
 
 import java.math.BigInteger;
 
-import de.juliseken.scytale.rsa.api.Key;
+import de.juliseken.scytale.rsa.api.RSAKey;
 
-public abstract class AbstractKey implements Key {
+public abstract class AbstractRSAKey implements RSAKey {
     private BigInteger exponent;
     private BigInteger modulus;
 
-    public AbstractKey(BigInteger exponent, BigInteger modulus) {
+    public AbstractRSAKey(BigInteger exponent, BigInteger modulus) {
         this.exponent = exponent;
         this.modulus = modulus;
     }
