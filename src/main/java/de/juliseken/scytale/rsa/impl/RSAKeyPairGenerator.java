@@ -2,10 +2,11 @@ package de.juliseken.scytale.rsa.impl;
 
 import java.math.BigInteger;
 
+import de.juliseken.scytale.key.api.KeyPairGenerator;
 import de.juliseken.scytale.rsa.api.RSAPrivateKey;
 import de.juliseken.scytale.rsa.api.RSAPublicKey;
 
-public class RSAKeyPairGenerator implements de.juliseken.scytale.key.api.KeyPairGenerator {
+public class RSAKeyPairGenerator implements KeyPairGenerator {
     public RSAKeyPair generate() {
         BigInteger p = new BigInteger("17");
         BigInteger q = new BigInteger("11");

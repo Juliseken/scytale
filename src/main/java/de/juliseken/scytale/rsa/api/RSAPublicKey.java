@@ -1,3 +1,5 @@
 package de.juliseken.scytale.rsa.api;
 
-public interface RSAPublicKey extends RSAKey, de.juliseken.scytale.key.api.PublicKey {}
+import de.juliseken.scytale.key.api.PublicKey;
+
+public interface RSAPublicKey extends RSAKey, PublicKey {}

@@ -1,9 +1,10 @@
 package de.juliseken.scytale.rsa.impl;
 
+import de.juliseken.scytale.key.api.KeyPair;
 import de.juliseken.scytale.rsa.api.RSAPrivateKey;
 import de.juliseken.scytale.rsa.api.RSAPublicKey;
 
-public class RSAKeyPair implements de.juliseken.scytale.key.api.KeyPair {
+public class RSAKeyPair implements KeyPair {
 
     private RSAPrivateKey privateKey;
     private RSAPublicKey publicKey;
