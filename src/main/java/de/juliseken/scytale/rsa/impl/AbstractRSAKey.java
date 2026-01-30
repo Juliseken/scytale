@@ -1,6 +1,7 @@
 package de.juliseken.scytale.rsa.impl;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 import de.juliseken.scytale.rsa.api.RSAKey;
 
@@ -19,5 +20,19 @@ public abstract class AbstractRSAKey implements RSAKey {
 
     public BigInteger getModulus() {
         return modulus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RSAKey other = (RSAKey) o;
+        return exponent.equals(other.getExponent()) &&
+               modulus.equals(other.getModulus());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(exponent, modulus);
     }
 }
