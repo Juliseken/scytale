@@ -18,8 +18,8 @@ public class RSAKeyPairGenerator implements KeyPairGenerator {
         BigInteger phi_n = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
         BigInteger e = nt.generateRelativePrime(phi_n);
         BigInteger d = nt.modInverse(e, phi_n);
-        RSAPrivateKey privateKey = new RSAPrivateKeyImpl(e, n);
-        RSAPublicKey publicKey = new RSAPublicKeyImpl(d, n);
+        RSAPrivateKey privateKey = new RSAPrivateKeyImpl(d, n);
+        RSAPublicKey publicKey = new RSAPublicKeyImpl(e, n);
         return new RSAKeyPair(privateKey, publicKey);
     }
 }
