@@ -39,7 +39,7 @@ public class Scytale {
 
         RSAPublicKey publicKey = keyReader.readPublic("rsa-naive.pub");
 
-        List<byte[]> messageBlocks = blockInput.readBlocks(Path.of("message.txt"), messageBlockSize);
+        List<byte[]> messageBlocks = blockInput.readBlocks(Path.of("message.txt"), messageBlockSize, true);
         List<Message> messages = messageBlocks.stream()
             .map(messageCodec::fromBytes)
             .toList();
@@ -51,7 +51,7 @@ public class Scytale {
         List<byte[]> outBlocks = cipherTexts.stream()
             .map(cipherTextCodec::toBytes)
             .toList();
-        blockOutput.writeBlocks(outBlocks, Path.of("ciphertext"));
+        blockOutput.writeBlocks(outBlocks, Path.of("ciphertext"), false);
     }
 
     private static void decryptFile() throws IOException {
@@ -67,7 +67,7 @@ public class Scytale {
 
         RSAPrivateKey privateKey = keyReader.readPrivate("rsa-naive");
 
-        List<byte[]> cipherBlocks = blockInput.readBlocks(Path.of("ciphertext"), cipherTextBlockSize);
+        List<byte[]> cipherBlocks = blockInput.readBlocks(Path.of("ciphertext"), cipherTextBlockSize, false);
         List<CipherText> cipherTexts = cipherBlocks.stream()
             .map(cipherTextCodec::fromBytes)
             .toList();
@@ -79,7 +79,7 @@ public class Scytale {
         List<byte[]> outBlocks = messages.stream()
             .map(messageCodec::toBytes)
             .toList();
-        blockOutput.writeBlocks(outBlocks, Path.of("decrypted.txt"));
+        blockOutput.writeBlocks(outBlocks, Path.of("decrypted.txt"), true);
     }
 
     private static void generateKeyPair() throws IOException {

@@ -56,7 +56,7 @@ public class RSARoundTripTest {
 
         Files.writeString(plainPath, plaintext, StandardCharsets.UTF_8);
 
-        List<byte[]> messageBlocks = blockInput.readBlocks(plainPath, messageBlockSize);
+        List<byte[]> messageBlocks = blockInput.readBlocks(plainPath, messageBlockSize, true);
         List<Message> messages = messageBlocks.stream()
             .map(messageCodec::fromBytes)
             .toList();
@@ -69,9 +69,9 @@ public class RSARoundTripTest {
             .map(cipherTextCodec::toBytes)
             .toList();
 
-        blockOutput.writeBlocks(cipherBlocks, cipherPath);
+        blockOutput.writeBlocks(cipherBlocks, cipherPath, false);
 
-        List<byte[]> cipherBlocksRead = blockInput.readBlocks(cipherPath, cipherTextBlockSize);
+        List<byte[]> cipherBlocksRead = blockInput.readBlocks(cipherPath, cipherTextBlockSize, false);
         
         List<CipherText> cipherTextsRead = cipherBlocksRead.stream()
             .map(cipherTextCodec::fromBytes)
@@ -85,7 +85,7 @@ public class RSARoundTripTest {
             .map(messageCodec::toBytes)
             .toList();
         
-        blockOutput.writeBlocks(messageBlocksRead, decryptedPath);
+        blockOutput.writeBlocks(messageBlocksRead, decryptedPath, true);
 
         byte[] original = Files.readAllBytes(plainPath);
         byte[] decrypted = Files.readAllBytes(decryptedPath);
