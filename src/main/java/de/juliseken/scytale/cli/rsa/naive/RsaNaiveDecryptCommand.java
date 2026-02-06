@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import de.juliseken.scytale.cli.VersionProvider;
 import de.juliseken.scytale.key.api.PublicKeyEncryption;
 import de.juliseken.scytale.rsa.api.RSAPrivateKey;
 import de.juliseken.scytale.rsa.api.RSAPublicKey;
@@ -19,7 +20,7 @@ import de.juliseken.scytale.text.io.BlockOutput;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-@Command(name = "decrypt")
+@Command(name = "decrypt", mixinStandardHelpOptions = true, versionProvider = VersionProvider.class)
 public class RsaNaiveDecryptCommand implements Runnable {
 
     @Option(names = {"-i", "--in-file"}, required = false)

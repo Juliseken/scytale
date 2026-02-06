@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import de.juliseken.scytale.cli.VersionProvider;
 import de.juliseken.scytale.math.impl.NumberTheoryNaive;
 import de.juliseken.scytale.rsa.impl.RSAKeyPair;
 import de.juliseken.scytale.rsa.impl.RSAKeyPairGenerator;
@@ -12,7 +13,7 @@ import de.juliseken.scytale.rsa.io.RSAKeyWriter;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-@Command(name = "keygen")
+@Command(name = "keygen", mixinStandardHelpOptions = true, versionProvider = VersionProvider.class)
 public class RsaNaiveKeygenCommand implements Runnable {
 
     @Option(names = {"-b", "--bits"}, defaultValue = "32")
