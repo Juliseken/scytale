@@ -23,12 +23,10 @@ public class MessageBlockCodec {
     }
 
     private byte[] normalize(byte[] raw) {
-        if (raw.length > blockSize) {
-            throw new IllegalArgumentException("Block too large");
-        }
-
         byte[] normalized = new byte[blockSize];
-        System.arraycopy(raw, 0, normalized, blockSize - raw.length, raw.length);
+        int start = raw.length > blockSize ? 1 : 0;
+        System.arraycopy(raw, start,
+            normalized, blockSize - raw.length + start, Math.min(blockSize, raw.length));
         return normalized;
     }
 }
