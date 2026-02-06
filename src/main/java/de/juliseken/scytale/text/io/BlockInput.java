@@ -9,26 +9,24 @@ import java.util.List;
 
 public class BlockInput {
 
-    public List<byte[]> readBlocks(Path path, int blockSize, boolean withPadding) throws IOException {
+    public List<byte[]> readBlocks(InputStream in, int blockSize, boolean withPadding) throws IOException {
         List<byte[]> blocks = new ArrayList<byte[]>();
         byte[] buffer = new byte[blockSize];
         boolean isPadded = false;
 
-        try (InputStream in = Files.newInputStream(path)) {
-            int read;
-            while ((read = in.read(buffer)) != -1) {
-                if (read < blockSize) {
-                    byte paddingLen = (byte) (blockSize - read);
-                    byte[] padded = new byte[blockSize];
-                    System.arraycopy(buffer, 0, padded, 0, read);
-                    for (int i = read; i < blockSize; i++) {
-                        padded[i] = paddingLen;
-                    }
-                    blocks.add(padded);
-                    isPadded = true;
-                } else {
-                    blocks.add(buffer.clone());
+        int read;
+        while ((read = in.read(buffer)) != -1) {
+            if (read < blockSize) {
+                byte paddingLen = (byte) (blockSize - read);
+                byte[] padded = new byte[blockSize];
+                System.arraycopy(buffer, 0, padded, 0, read);
+                for (int i = read; i < blockSize; i++) {
+                    padded[i] = paddingLen;
                 }
+                blocks.add(padded);
+                isPadded = true;
+            } else {
+                blocks.add(buffer.clone());
             }
         }
         if (!isPadded && withPadding) {
@@ -39,5 +37,11 @@ public class BlockInput {
             blocks.add(padding);
         }
         return blocks;
+    }
+
+    public List<byte[]> readBlocks(Path path, int blockSize, boolean withPadding) throws IOException {
+        try (InputStream in = Files.newInputStream(path)) {
+            return readBlocks(in, blockSize, withPadding);
+        }
     }
 }
