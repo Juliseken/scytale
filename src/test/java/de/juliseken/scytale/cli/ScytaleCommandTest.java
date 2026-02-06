@@ -21,6 +21,8 @@ public class ScytaleCommandTest {
         Path plainPath = tempDir.resolve("plain.txt");
         Path cipherPath = tempDir.resolve("cipher.txt");
         Path decryptedPath = tempDir.resolve("decrypted.txt");
+        Path publicKeyPath = tempDir.resolve("rsa-naive.pub");
+        Path privateKeyPath = tempDir.resolve("rsa-naive");
 
         Files.writeString(plainPath, plaintext, StandardCharsets.UTF_8);
 
@@ -28,11 +30,13 @@ public class ScytaleCommandTest {
         int exitCode = new CommandLine(new ScytaleCommand()).execute(args1);
         assertEquals(0, exitCode);
 
-        String[] args2 = {"rsa-naive", "encrypt", "-i", plainPath.toString(), "-o", cipherPath.toString()};
+        String[] args2 = {"rsa-naive", "encrypt", "-i", plainPath.toString(), 
+            "-o", cipherPath.toString(), "-k", publicKeyPath.toString() };
         exitCode = new CommandLine(new ScytaleCommand()).execute(args2);
         assertEquals(0, exitCode);
 
-        String[] args3 = {"rsa-naive", "decrypt", "-i", cipherPath.toString(), "-o", decryptedPath.toString()};
+        String[] args3 = {"rsa-naive", "decrypt", "-i", cipherPath.toString(),
+            "-o", decryptedPath.toString(), "-k", privateKeyPath.toString()};
         exitCode = new CommandLine(new ScytaleCommand()).execute(args3);
         assertEquals(0, exitCode);
         
