@@ -46,7 +46,7 @@ public class RsaNaiveDecryptCommand implements Runnable {
         try {
             RSAPrivateKey privateKey = keyReader.readPrivate(privateKeyFile);
             int keyBitLength = privateKey.getBitLength();
-            int cipherTextBlockSize = keyBitLength / 2;
+            int cipherTextBlockSize = keyBitLength % 8 == 0 ? keyBitLength / 8 : keyBitLength / 8 + 1;
             int messageBlockSize = cipherTextBlockSize - 1;
 
             CipherTextBlockCodec cipherTextCodec = new CipherTextBlockCodec(cipherTextBlockSize);

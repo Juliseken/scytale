@@ -45,7 +45,7 @@ public class RsaNaiveEncryptCommand implements Runnable {
         try {
             RSAPublicKey publicKey = keyReader.readPublic(publicKeyFile);
             int keyBitLength = publicKey.getBitLength();
-            int cipherTextBlockSize = keyBitLength / 2;
+            int cipherTextBlockSize = keyBitLength % 8 == 0 ? keyBitLength / 8 : keyBitLength / 8 + 1;
             int messageBlockSize = cipherTextBlockSize - 1;
 
             MessageBlockCodec messageCodec = new MessageBlockCodec(messageBlockSize);
@@ -59,7 +59,7 @@ public class RsaNaiveEncryptCommand implements Runnable {
             List<CipherText> cipherTexts = messages.stream()
                 .map(m -> rsaEncryption.encrypt(m, publicKey))
                 .toList();
-            
+
             List<byte[]> outBlocks = cipherTexts.stream()
                 .map(cipherTextCodec::toBytes)
                 .toList();
